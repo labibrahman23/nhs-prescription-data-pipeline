@@ -1,14 +1,15 @@
 # NHS Prescription Data Pipeline
 
 ## Overview
-This project follows a data engineering workflow, on prescription analysis. . First it collects prescription data from the open nhs prescription API. 5002 records are downloaded and stored as a raw json file, before being converted to pandas dataframe, explored and cleaned. The processed dataset is stored in a postgreSQL database where it is queried to answer selected business questions. Visualisations, such as graphs, charts and tables are created using these findings and presented on a streamlit dashboard.
+This project follows a data engineering workflow, on NHS prescription analysis. It it collects prescription data from the open NHS API. 5002 records are downloaded and stored as a raw JSON file, before being converted to pandas dataframe, explored and cleaned. The processed dataset is stored in a postgreSQL database where it is queried to answer selected business questions. Visualisations, such as graphs, charts and tables are created using these findings and presented on a Streamlit dashboard.
 
 ## Key Features
 - Extracting over 5000 records from NHS API
-- Processing data, cleaning and storing data using pandas and numpy methods
+- Processing and cleaning data using pandas and numpy methods
 - Data saved to postgreSQL database
-- Queriying sql database and buildimg visualisations
-- Building streamlit dashboard using findings
+- Queriying SQL database
+- Building visualisations using query results
+- Building Streamlit dashboard using visualisations and insights
 
 
 ## Workflow
@@ -25,7 +26,6 @@ This project follows a data engineering workflow, on prescription analysis. . Fi
 
 
     ├── nhs-health-data-pipeline
-    ├── .venv                                virtual environment 
     ├── analysis                             code for analysing cleaned dataset 
     │   ├── dashboard.py                     creates streamlit dashboard with visulaisations and inisights
     │   ├── exploration.py                   contains methods for exploring / queriying sql database
@@ -39,13 +39,13 @@ This project follows a data engineering workflow, on prescription analysis. . Fi
     │   └── raw
     │        └── epd1.json                   raw data downloaded from NHS prescription database
     │
-    ├── pictures                             contains pictures shown in github repository
+    ├── pictures                             pictures used in Github Readme
     │
     ├── sql                                  SQL methods
     │    └── create_tables.sql               SQL used to create table 
     │    └── load_data.sql                   SQL used to copy data to postgreSQL database
     │
-    ├── src                                  source code for use in this project.
+    ├── src                                  source code for downloading, cleaning and storing data
     │    └── nhs_pipeline
     │            ├── __init__.py             sets the nhs_pipeline folder as a python package
     │            ├── clean.py                cleans dataset 
@@ -66,10 +66,11 @@ First stage, data is extracted from the NHS Open API
 
 Download.py requests records from NHS Open API and stores this as a raw JSON file
 
-- Data is extracted from NHS Open API
+- 5000 records are extracted from NHS Open API
 - Data is stored in raw JSON form 
-- The function has a limit to the number of records it pulls
 - Exception handling is used to catch specific errors
+- Data is stored in raw folder and creates a new JSON to hold this data when stored
+- This data is not commited to github and uses the users personal storage.
 
 This data is stored seperately as raw data, this allows later stages to be reproduced.
 This function is the start of the pipeline, and allows for the next stage, data cleaning.
@@ -85,8 +86,9 @@ The cleaning stage:
 - Converts dates and numeric fields to appropriate data types.
 - Replaces missing SNOMED codes with a placeholder value.
 - Removes unused address columns.
-- Converts the unidentified field to Boolean values.
+- Maps the unidentified field to Boolean values.
 
+These functions ensure data has conistent names and data types, which are validatied, and allows them to safely be analysed and stored in postgreSQL.
 The cleaned DataFrame is then passed to the validation stage.
 
 
@@ -116,31 +118,40 @@ The script checks:
 
 This helped confirm the pipeline successfully loaded the cleaned NHS prescription data and that the database schema matched expectations.
 
----
+
+There is also exploration.py in the in the pre analysis stage when I was looking into how the data could be cleaned. 
+I used this to look at: 
+    - Sample records froom specifc columns
+    - Null values which require cleaning
+    - Duplicate values which require removing
+    - Looking at data this dataset contains
+    - Data types
+
+This information greatly helped me learn about the dataset and helped me develop business questions and queries I could use during analyses.
+
 
 ## Business Analysis
 
-`queries.py` contains SQL queries designed around key NHS prescription analysis questions.
+queries.py contains SQL queries designed around key NHS prescription analysis questions.
 
 Current analysis focuses on a single month of prescription data.
 
 The queries answer:
 
 1. Which medications cause the greatest NHS expenditure?
+
 2. Which regions cost the NHS the most?
-3. Which regions request the most of which medication?
-4. Which medical sectors are prescriped the most medication, and what are these sectors prescription costs?
+3. Which medications have the greatest prescription volume in each region?
+4. Which medical sectors have the greatest prescription volume and costs?
 
-The SQL queries perform aggregation directly in PostgreSQL before being passed to Python for visualisation.
-
-This approach reduces unnecessary data processing in Python and follows common data engineering practices by using the database for filtering and aggregation.
+The SQL queries perform aggregation, including GROUP By, SUM and COUNT directly in PostgreSQL before being passed to Python for visualisations.
 
 Future versions of the project will expand the pipeline to include multiple months of data, enabling time-series analysis and prescription trends.
 
 
 ## Data Visualisation
 
-`visualisation.py` creates charts from the SQL analysis results.
+visualisation.py creates charts from the SQL analysis results.
 
 The visualisations were designed to answer the business questions identified during analysis.
 
@@ -150,8 +161,6 @@ Current visualisations include:
 - NHS prescription expenditure by region
 - Most prescribed medication using region
 - Medical sectors analysis
-- NHS metrics
-- Key findings
 
 
 The visualisation functions accept pandas DataFrames generated from SQL queries and creates charts to be used in the streamlit dashboard
@@ -169,13 +178,17 @@ The dashboard connects directly to PostgreSQL and displays insights generated fr
 
 Features include:
 
-- Total NHS prescription cost
-- Number of prescriptions analysed
-- Number of medications and regions analysed
-- Highest prescribed medications
-- Highest cost medications
-- Prescription cost versus volume relationship
-- Regional prescribing patterns
+- Metric:
+    - Total NHS prescription cost
+    - Number of prescriptions analysed
+    - Number of medications analysed
+    - Number of regions analysed
+- Greatest prescribed medications 
+- NHS expenditure by region
+- Greatest prescribed medication by region
+- Medical sector analysis
+- Key findings
+
 
 The dashboard separates data retrieval, analysis, and visualisation into different modules, allowing the components to be independently updated.
 

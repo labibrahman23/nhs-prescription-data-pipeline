@@ -170,21 +170,19 @@ with right_side:
             ### Limitations
             Large regions may dominate the chart
             """)
-        
 
     with st.container():
         st.subheader("Key findings")
     
-        
+
+        st.write("""
 
         
-        st.write(""""
-        - There greatest costing drugs are \n
-        - These regions prescribe a lot of ... which could mean they need\n
-        - This region uses the most government spenditure, meaning that area could need more focus\n
-        - This medical region needs a lot of funding, could need some research\n
+        - Unexpectedly, the Midlands region accounts for the greatest NHS expenditre. Whilst it includes major cities, I expected London to be the top cause of expenditure.\n
+        - I have made the assumption that the majority of the dataset comes from the midlands or south west region to do the expenditure pie chart.\n
+        - These regions prescribe a large amount of Apsirin and Phseptone which are used for pain relief suggesting this is medical region could benefit from more research and development\n
+        - Insulin pens make up 5 of the 10 most prescribed items, meaning more funding / research into product of this prescriptions could reduce overall NHS costs\n
+        - the cardiovascular system has the greatest prescription volume whilst the endocrine system accounts for the greatest total NHS expenditure
         """)
-
-        
 
 
