@@ -203,8 +203,6 @@ Features include:
 - Key findings
 
 
-The dashboard separates data retrieval, analysis, and visualisation into different modules, allowing the components to be independently updated.
-
 ![Project Screenshot](pictures/Section1.png)
 ![Project Screenshot](pictures/Section2.png)
 
@@ -212,6 +210,8 @@ The dashboard separates data retrieval, analysis, and visualisation into differe
 
 ## Future Improvements
 - Improve data set ( increase amount of data), have multiple months of data to see trends overtime
+- Produce greater analysis using more complex queries to answer most requested NHS questions
 - Improve feature engineering, create more data using existing columns
 - Add machine learning models to see experiment with data to make predictions
 - Improve dashboard to be more interactive 
+
