@@ -74,6 +74,8 @@ Download.py requests records from NHS Open API and stores this as a raw JSON fil
 
 This data is stored seperately as raw data, this allows later stages to be reproduced.
 This function is the start of the pipeline, and allows for the next stage, data cleaning.
+Below is an example of some data saved in the JSON file
+![Project Screenshot](pictures/rawJson.png)
 
 
 ## Data Cleaning
@@ -90,6 +92,8 @@ The cleaning stage:
 
 These functions ensure data has conistent names and data types, which are validatied, and allows them to safely be analysed and stored in postgreSQL.
 The cleaned DataFrame is then passed to the validation stage.
+![Project Screenshot](pictures/CleanedData.png)
+
 
 
 ## Data Validation
@@ -104,6 +108,7 @@ The validation stage checks:
 - Numeric values do not contain invalid negative values
 
 If validation errors are detected, the pipeline stops before loading data into the database.
+This prevents bad data / dirty data being saved into the PostgreSQl database and ensures that data is of the correct and standard for analysis.
 
 ## Dataset Exploration
 
@@ -139,10 +144,16 @@ Current analysis focuses on a single month of prescription data.
 The queries answer:
 
 1. Which medications cause the greatest NHS expenditure?
+    - This could help the NHS understand which prescriptions are causing great NHS costs. They could use this information to research whether or not these prescriptions are over prescribed or if medical patients require stronger medications to help with treaments.
 
 2. Which regions cost the NHS the most?
+    - Regional expenditure information would help the NHS understand the ratio of prescription cost to region. Using this information they could analyse whether there are enough pharmasits / pharmacies spread across these regions to ensure users are treated 
+
 3. Which medications have the greatest prescription volume in each region?
+    - This information could help the NHS understand which regions are suffering from which illnesses, diseases or issues. They could deploy medical experts and researchers into looking into these regions, they could educate the target demographics depending on the drug in these regions on ways to prevent these illnesses. This helps the NHS target issues where they lie rather than wasting time and resources trying to solve all isssues everywhere.
+
 4. Which medical sectors have the greatest prescription volume and costs?
+    This particualrly helps the NHS understand which medical sectors may require the most research and development. NHS were to develop ways to cheapy produce their largest sector drugs, it would greatly reduce overall costs. They could also educate and research into these specific inlesses and see if any inaccuraries in prescriptions
 
 The SQL queries perform aggregation, including GROUP By, SUM and COUNT directly in PostgreSQL before being passed to Python for visualisations.
 
@@ -155,13 +166,15 @@ visualisation.py creates charts from the SQL analysis results.
 
 The visualisations were designed to answer the business questions identified during analysis.
 
-Current visualisations include:
+Visualisations include:
 
 - Top 10 medications by NHS expenditure
-- NHS prescription expenditure by region
-- Most prescribed medication using region
-- Medical sectors analysis
+    This is a horizontal bar chart with hover data showing total cost, quantity prescriped and medication.
+    ![Project Screenshot](pictures/barchart.png)
 
+- NHS prescription expenditure by region
+    This is a pie chart showing the percentage of total NHS expenditure using colour keys and colour assignment
+    ![Project Screenshot](pictures/pieChart.png)
 
 The visualisation functions accept pandas DataFrames generated from SQL queries and creates charts to be used in the streamlit dashboard
 
@@ -183,7 +196,7 @@ Features include:
     - Number of prescriptions analysed
     - Number of medications analysed
     - Number of regions analysed
-- Greatest prescribed medications 
+- Top 10 medications by NHS expenditure
 - NHS expenditure by region
 - Greatest prescribed medication by region
 - Medical sector analysis
@@ -191,6 +204,10 @@ Features include:
 
 
 The dashboard separates data retrieval, analysis, and visualisation into different modules, allowing the components to be independently updated.
+
+![Project Screenshot](pictures/Section1.png)
+![Project Screenshot](pictures/Section2.png)
+
 
 
 ## Future Improvements
