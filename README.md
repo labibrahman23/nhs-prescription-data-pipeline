@@ -147,14 +147,14 @@ The queries answer:
     - This could help the NHS understand which prescriptions are causing great NHS costs. They could use this information to research whether or not these prescriptions are over prescribed or if medical patients require stronger medications to help with treaments.
 
 2. Which regions cost the NHS the most?
-    - Regional expenditure information would help the NHS understand the ratio of prescription cost to region. Using this information they could analyse whether there are enough pharmasits / pharmacies spread across these regions to ensure users are treated 
+    - Regional expenditure information would help the NHS understand the ratio of prescription cost to region. Using this information they could analyse whether there are a correctly disrtributed number of pharmacies, pharmasists and medical staff across these regions.
 
 3. Which medications have the greatest prescription volume in each region?
-    - This information could help the NHS understand which regions are suffering from which illnesses, diseases or issues. They could deploy medical experts and researchers into looking into these regions, they could educate the target demographics depending on the drug in these regions on ways to prevent these illnesses. This helps the NHS target issues where they lie rather than wasting time and resources trying to solve all isssues everywhere.
+    - This information could help the NHS understand which medications are prescribed most in different regions. They could research into reasons causing these issues such as illness, disease or misinformation in these target regions. They could target resources into those regions with experts to help prevent causes such as uncleanliness of water / food supplies in these area or lack on information in target demographics. This would help apply their resources strategically rather than spreading these methods across the entire country.
 
 4. Which medical sectors have the greatest prescription volume and costs?
-    This particualrly helps the NHS understand which medical sectors may require the most research and development. NHS were to develop ways to cheapy produce their largest sector drugs, it would greatly reduce overall costs. They could also educate and research into these specific inlesses and see if any inaccuraries in prescriptions
-
+    - This particualrly helps the NHS understand which medical sectors account for most prescriptions and total cost. With this informaton they can more clearly see which medical sectors could require more research and development in order to reduce costs and efficiently produce these medications. They could also use this information in combination with the greatest prescribed medications to investigate further into whether prescriptions are appropriately prescribed by pharmacies, helping to reduce NHS resource management and costs.
+    
 The SQL queries perform aggregation, including GROUP By, SUM and COUNT directly in PostgreSQL before being passed to Python for visualisations.
 
 Future versions of the project will expand the pipeline to include multiple months of data, enabling time-series analysis and prescription trends.
